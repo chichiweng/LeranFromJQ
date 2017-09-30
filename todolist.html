@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ToDoList</title>
+	<link rel=stylesheet type="text/css" href="todoList.css">
+    <script type ="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
+    <script>
+    //create a close btn
+    $(document).ready(function(){
+    var list = $("li").length; 
+     for(var i = 0 ;i < list;i++){     	
+     	// $('li:eq('+i+')').append('<span>x</span>');
+     	$(`li:eq(${i})`).append('<span id="x">x</span>');
+     	// $('li').eq(i).append('<span>x</span>');
+     } 
+    });
+
+    
+    $(document).on('click','#x',function(event){
+    	$(this).parent().remove();
+    });
+     
+    $(document).on('dblclick','a',function(){
+    	if(window.$currEditing){ finishEditing($currEditing)};
+
+    	var $cell = $(this);  //a標籤
+    	var $inp = $("<input type ='text' />"); // 只是做了一個text尚未加進去
+    	$inp.val($cell.text());
+    	$cell.append($inp); //加進a標籤中
+    	$inp[0].select();//將點擊的value 選起來
+    	$currEditing = $inp;
+     }).on("click",function(){
+
+     	//點擊其中一個則另一個需關閉不可編輯
+     	if(window.$currEditing && $currEditing.parent()[0]!=this){
+     		finishEditing($currEditing);
+     	}
+     });  
+
+     //this表a標籤 當a標籤裡面的input按了enter 或 tab 則可以結束編輯
+     $(this).on("keydown",'input', function (e) {
+                if (e.which == 13 || e.which == 9)
+                    finishEditing($(this));
+            });
+     
+     //結束編輯模式
+     function finishEditing($inp) {
+        $inp.parent().text($inp.val());
+        window.$currEditing = null;
+     };
+
+
+    //create newList
+	 function newList(){
+	   	   var input = $('#myInput').val();	 
+	   	   if(input == ""){
+	   	   	   alert("please write some list");
+	   	   } else{
+	   	   	   $('ul').append(`<li><a>${input}</a><span id="x">x</span></li>`);
+	   	   	  
+	   	   }
+	   	   $('#myInput').val("");  
+	   }  	  
+	</script>
+
+
+</head>
+<body>   
+	<div id="header">
+	   <h2>My To Do List</h2>	   
+	   <div id="todoInput">
+	      
+	      <input type="text" id ="myInput" placeholder="ToDo...">
+	      
+	      <input type="button" id="inputAdd" value="Add" onclick="newList()">
+	   </div>
+	</div>
+    <div id ="content">   
+	   <ul id ="list">
+	  
+		<!--   <li><a>test</a></li>
+		  <li><a>test2</a></li> -->
+	   </ul>
+	</div>
+	
+</body>
+</html>

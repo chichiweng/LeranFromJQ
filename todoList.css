@@ -1,0 +1,26 @@
+#header{
+	background-color: #fffacd;
+	width:400px;
+	/*border: 1px solid black ;*/
+}
+#todoInput{
+
+	width: 400px;
+	margin-left: 75px;
+}
+h2{
+	margin-bottom: 2px;
+	margin-left: 100px;
+}
+
+#list{
+	display:inline;
+}
+#x{
+   float: right;
+}
+
+#content{	
+	width:400px;
+	/*border:1px solid red;*/
+}
